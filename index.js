@@ -72,15 +72,36 @@ const engineerQuestions = [
     }
 ];
 
+const internQuestions = [
+    {
+        type: "input",
+        message: "Please enter this intern's name",
+        name: "internName"
+    },
+    {
+        type: "input",
+        message: "Please enter this intern's employee ID",
+        name: "internID"
+    },
+    {
+        type: "input",
+        message: "Please enter this intern's email address",
+        name: "internEmail"
+    },
+    {
+        type: "input",
+        message: "Please enter this intern's school",
+        name: "internSchool"
+    }
+];
+
 // function to initialize program
 function init() {
     inquirer
     .prompt(questions)
     .then((response) => {
-        let currentEmployee = new Manager (response.managerName,response.managerID,response.managerEmail,response.managerOfficeNumber)
-        allEmployeeObjects.push(currentEmployee);
+        allEmployeeObjects.push(new Manager (response.managerName,response.managerID,response.managerEmail,response.managerOfficeNumber));
         console.log(allEmployeeObjects);
-        currentEmployee = "";
         userOption();
     })
 }
@@ -92,17 +113,44 @@ function userOption() {
     .then((response) => {
         if (response.userOption == "Add an Engineer") {
             inquireEngineer();
-        } else if (response.userOptions == "Add an Intern") {
+        } else if (response.userOption == "Add an Intern") {
             inquireIntern();
-        } else if (response.userOptions == "Finished building team") {
-            render();
+        } else if (response.userOption == "Finished building team") {
+            writeToFile(outputPath,render(allEmployeeObjects))
         }
     })
 }
 
 function inquireEngineer () {
     inquirer
-    .prompt
+    .prompt(engineerQuestions)
+    .then((response) => {
+        allEmployeeObjects.push(new Engineer (response.engineerName,response.engineerID,response.engineerEmail,response.engineerGithub))
+        console.log(allEmployeeObjects);
+        userOption();
+    })
+}
+
+function inquireIntern () {
+    inquirer
+    .prompt(internQuestions)
+    .then((response) => {
+        allEmployeeObjects.push(new Intern (response.internName,response.internID,response.internEmail,response.internSchool))
+        console.log(allEmployeeObjects);
+        userOption();
+    })
+}
+
+// function to write README file
+function writeToFile(fileName, data) {
+    fs.appendFile(fileName, data, function (error) {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('File created!');
+        }
+    }
+)
 }
 
 // function call to initialize program
