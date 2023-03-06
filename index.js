@@ -121,6 +121,7 @@ function userOption() {
     })
 }
 
+// function to prompt for engineer questions
 function inquireEngineer () {
     inquirer
     .prompt(engineerQuestions)
@@ -131,6 +132,7 @@ function inquireEngineer () {
     })
 }
 
+// function to prompt for intern questions
 function inquireIntern () {
     inquirer
     .prompt(internQuestions)
@@ -141,7 +143,7 @@ function inquireIntern () {
     })
 }
 
-// function to write README file
+// function to write team HTML file
 function writeToFile(fileName, data) {
     fs.appendFile(fileName, data, function (error) {
         if (error) {
