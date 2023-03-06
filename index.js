@@ -10,6 +10,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
+const Employee = require("./lib/Employee");
 
 // JS Variables
 const allEmployeeObjects = [];
@@ -31,6 +32,11 @@ const questions = [
         type: "input",
         message: "Please enter the Team Manager's email address",
         name: "managerEmail"
+    },
+    {
+        type: "input",
+        message: "Please enter the Team Manager's office number",
+        name: "managerOfficeNumber"
     }
 ];
 
@@ -43,11 +49,38 @@ const options = [
     }
 ];
 
+const engineerQuestions = [
+    {
+        type: "input",
+        message: "Please enter this engineer's name",
+        name: "engineerName"
+    },
+    {
+        type: "input",
+        message: "Please enter this engineer's employee ID",
+        name: "engineerID"
+    },
+    {
+        type: "input",
+        message: "Please enter this engineer's email address",
+        name: "engineerEmail"
+    },
+    {
+        type: "input",
+        message: "Please enter this engineer's GitHub username",
+        name: "engineerGithub"
+    }
+];
+
 // function to initialize program
 function init() {
     inquirer
     .prompt(questions)
     .then((response) => {
+        let currentEmployee = new Manager (response.managerName,response.managerID,response.managerEmail,response.managerOfficeNumber)
+        allEmployeeObjects.push(currentEmployee);
+        console.log(allEmployeeObjects);
+        currentEmployee = "";
         userOption();
     })
 }
@@ -57,8 +90,19 @@ function userOption() {
     inquirer
     .prompt(options)
     .then((response) => {
-
+        if (response.userOption == "Add an Engineer") {
+            inquireEngineer();
+        } else if (response.userOptions == "Add an Intern") {
+            inquireIntern();
+        } else if (response.userOptions == "Finished building team") {
+            render();
+        }
     })
+}
+
+function inquireEngineer () {
+    inquirer
+    .prompt
 }
 
 // function call to initialize program

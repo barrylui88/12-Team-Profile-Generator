@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/barrylui88/12-Team-Profile-Generator#readme",
   "dependencies": {
-    "inquirer": "^9.1.4",
+    "inquirer": "^6.3.1",
     "jest": "^29.5.0"
   }
 }
